@@ -11,6 +11,10 @@ services:
       - 5000:80
     networks:
       - pacco
+    volumes:
+      - type: bind
+        source: ../../logs/api-gateway
+        target: /app/logs
 
   availability-service:
     build: ../../Pacco.Services.Availability
@@ -20,7 +24,11 @@ services:
       - 5001:80 
     networks:
       - pacco
-
+    volumes:
+      - type: bind
+        source: ../../logs/availability-service
+        target: /app/logs
+        
   customers-service:
     build: ../../Pacco.Services.Customers
     container_name: customers-service
@@ -29,7 +37,11 @@ services:
       - 5002:80
     networks:
       - pacco
-
+    volumes:
+      - type: bind
+        source: ../../logs/customers-servicec
+        target: /app/logs
+        
   deliveries-service:
     build: ../../Pacco.Services.Deliveries
     container_name: deliveries-service
@@ -38,7 +50,11 @@ services:
       - 5003:80
     networks:
       - pacco
-
+    volumes:
+      - type: bind
+        source: ../../logs/deliveries-service
+        target: /app/logs
+        
   identity-service:
     build: ../../Pacco.Services.Identity
     container_name: identity-service
@@ -47,7 +63,11 @@ services:
       - 5004:80
     networks:
       - pacco
-
+    volumes:
+      - type: bind
+        source: ../../logs/identity-service
+        target: /app/logs
+        
   operations-service:
     build: ../../Pacco.Services.Operations
     container_name: operations-service
@@ -65,7 +85,11 @@ services:
       - ordermaker-service
       - parcels-service
       - vehicles-service
-
+    volumes:
+      - type: bind
+        source: ../../logs/operations-service
+        target: /app/logs
+        
   orders-service:
     build: ../../Pacco.Services.Orders
     container_name: orders-service
@@ -74,7 +98,11 @@ services:
       - 5006:80
     networks:
       - pacco
-
+    volumes:
+      - type: bind
+        source: ../../logs/orders-service
+        target: /app/logs
+        
   ordermaker-service:
     build: ../../Pacco.Services.OrderMaker
     container_name: ordermaker-service
@@ -83,7 +111,11 @@ services:
       - 5015:80
     networks:
       - pacco
-
+    volumes:
+      - type: bind
+        source: ../../logs/ordermaker-service
+        target: /app/logs
+        
   parcels-service:
     build: ../../Pacco.Services.Parcels
     container_name: parcels-service
@@ -92,7 +124,11 @@ services:
       - 5007:80
     networks:
       - pacco
-
+    volumes:
+      - type: bind
+        source: ../../logs/parcels-service
+        target: /app/logs
+        
   pricing-service:
     build: ../../Pacco.Services.Pricing
     container_name: pricing-service
@@ -101,7 +137,11 @@ services:
       - 5008:80
     networks:
       - pacco
-
+    volumes:
+      - type: bind
+        source: ../../logs/pricing-service
+        target: /app/logs
+        
   vehicles-service:
     build: ../../Pacco.Services.Vehicles
     container_name: vehicles-service
@@ -110,7 +150,11 @@ services:
       - 5009:80
     networks:
       - pacco
-
+    volumes:
+      - type: bind
+        source: ../../logs/vehicles-service
+        target: /app/logs
+        
 networks:
   pacco:
     name: pacco-network
