@@ -5,6 +5,8 @@ services:
     image: consul
     container_name: consul
     restart: unless-stopped
+    environment:
+    - CONSUL_LOCAL_CONFIG={"telemetry":{"prometheus_retention_time":"20s"}}
     networks:
       - pacco
     ports:
