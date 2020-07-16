@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: operations-service
+  labels:
+    app: operations-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: operations-service
+  template:
+    metadata:
+      labels:
+        app: operations-service
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /metrics
+        prometheus.io/runtimepath: /runtime_metrics
+        prometheus.io/port: "80"
+    spec:
+      containers:
+        - name: operations-service
+          image: meho27/pacco.services.operations:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - name: operations-config
+              mountPath: /app/appsettings.json
+              subPath: appsettings.json
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: kube
+      volumes:
+        - name: operations-config
+          configMap:
+            name: operations-config

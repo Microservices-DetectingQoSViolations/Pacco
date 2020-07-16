@@ -1,56 +1,131 @@
 global:
-  scrape_interval:     5s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
-  evaluation_interval: 5s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  scrape_interval:     5s
+  evaluation_interval: 5s
 
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
       - targets: ['prometheus:9090']
 
+
   - job_name: 'api-gateway'
     static_configs:
       - targets: ['api-gateway']
+
+  - job_name: 'api-gateway-runtime'
+    metrics_path: /runtime_metrics
+    static_configs:
+      - targets: ['api-gateway']
+
 
   - job_name: 'availability-service'
     static_configs:
       - targets: ['availability-service']
 
+  - job_name: 'availability-service-runtime'
+    metrics_path: /runtime_metrics
+    static_configs:
+      - targets: ['availability-service']
+
+
   - job_name: 'customers-service'
     static_configs:
       - targets: ['customers-service']
+
+  - job_name: 'customers-service-runtime'
+    metrics_path: /runtime_metrics
+    static_configs:
+      - targets: ['customers-service']
+
 
   - job_name: 'deliveries-service'
     static_configs:
       - targets: ['deliveries-service']
 
+  - job_name: 'deliveries-service-runtime'
+    metrics_path: /runtime_metrics
+    static_configs:
+      - targets: ['deliveries-service']
+
+
   - job_name: 'identity-service'
     static_configs:
       - targets: ['identity-service']
+
+  - job_name: 'identity-service-runtime'
+    metrics_path: /runtime_metrics
+    static_configs:
+      - targets: ['identity-service']
+
 
   - job_name: 'operations-service'
     static_configs:
       - targets: ['operations-service']
 
+  - job_name: 'operations-service-runtime'
+    metrics_path: /runtime_metrics
+    static_configs:
+      - targets: ['operations-service']
+
+
   - job_name: 'orders-service'
     static_configs:
       - targets: ['orders-service']
+
+  - job_name: 'orders-service-runtime'
+    metrics_path: /runtime_metrics
+    static_configs:
+      - targets: ['orders-service']
+
 
   - job_name: 'ordermaker-service'
     static_configs:
       - targets: ['ordermaker-service']
 
+  - job_name: 'ordermaker-service-runtime'
+    metrics_path: /runtime_metrics
+    static_configs:
+      - targets: ['ordermaker-service']
+
+
   - job_name: 'parcels-service'
     static_configs:
       - targets: ['parcels-service']
-      
+
+  - job_name: 'parcels-service-runtime'
+    metrics_path: /runtime_metrics
+    static_configs:
+      - targets: ['parcels-service']
+
+
   - job_name: 'pricing-service'
     static_configs:
       - targets: ['pricing-service']
+
+  - job_name: 'pricing-service-runtime'
+    metrics_path: /runtime_metrics
+    static_configs:
+      - targets: ['pricing-service']
+
 
   - job_name: 'vehicles-service'
     static_configs:
       - targets: ['vehicles-service']
 
+  - job_name: 'vehicles-service-runtime'
+    metrics_path: /runtime_metrics
+    static_configs:
+      - targets: ['vehicles-service']
+
+
   - job_name: 'rabbitmq'
     static_configs:
       - targets: ['rabbitmq:15692']
+
+
+  - job_name: 'consul'
+    metrics_path: /v1/agent/metrics
+    params:
+        format: ['prometheus']
+    static_configs:
+      - targets: ['consul:8500']
