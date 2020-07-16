@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway-service
+  labels:
+    app: api-gateway-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-gateway-service
+  template:
+    metadata:
+      labels:
+        app: api-gateway-service
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /metrics
+        prometheus.io/runtimepath: /runtime_metrics
+        prometheus.io/port: "80"
+    spec:
+      containers:
+        - name: api-gateway-service
+          image: meho27/pacco.services.api-gateway:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - name: api-gateway-config
+              mountPath: /app/appsettings.json
+              subPath: appsettings.json
+            - name: api-gateway-ntrada-config
+              mountPath: /app/ntrada-async.kube.yml
+              subPath: ntrada-async.kube.yml
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: kube
+            - name: NTRADA_CONFIG
+              value: ntrada-async.kube
+      volumes:
+        - name: api-gateway-config
+          configMap:
+            name: api-gateway-config
+        - name: api-gateway-ntrada-config
+          configMap:
+            name: api-gateway-ntrada-config

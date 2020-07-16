@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: parcels-service
+  labels:
+    app: parcels-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: parcels-service
+  template:
+    metadata:
+      labels:
+        app: parcels-service
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /metrics
+        prometheus.io/runtimepath: /runtime_metrics
+        prometheus.io/port: "80"
+    spec:
+      containers:
+        - name: parcels-service
+          image: meho27/pacco.services.parcels:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - name: parcels-config
+              mountPath: /app/appsettings.json
+              subPath: appsettings.json
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: kube
+      volumes:
+        - name: parcels-config
+          configMap:
+            name: parcels-config

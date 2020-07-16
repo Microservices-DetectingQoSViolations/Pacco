@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vehicles-service
+  labels:
+    app: vehicles-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vehicles-service
+  template:
+    metadata:
+      labels:
+        app: vehicles-service
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /metrics
+        prometheus.io/runtimepath: /runtime_metrics
+        prometheus.io/port: "80"
+    spec:
+      containers:
+        - name: vehicles-service
+          image: meho27/pacco.services.vehicles:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - name: vehicles-config
+              mountPath: /app/appsettings.json
+              subPath: appsettings.json
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: kube
+      volumes:
+        - name: vehicles-config
+          configMap:
+            name: vehicles-config

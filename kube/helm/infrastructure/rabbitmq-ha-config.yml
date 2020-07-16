@@ -1,0 +1,43 @@
+rabbitmqUsername: guest
+rabbitmqPassword: guest
+
+managementUsername: guest
+managementPassword: guest
+
+definitions:
+  users: |-
+    {
+      "name": "guest",
+      "password": "guest",
+      "tags": "administrator"
+    }
+  permissions: |-
+    {
+      "user": "guest",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+
+extraConfig: |
+  default_vhost = /
+  default_user = guest
+  default_pass = guest
+  default_permissions.configure = .*
+  default_permissions.read = .*
+  default_permissions.write = .*
+  default_user_tags.management = true
+
+
+rabbitmqPrometheusPlugin:
+  enabled: true
+
+prometheus:
+  enabled: false
+  exporter:
+    enabled: false
+  operator:
+    enabled: false
+    alerts:
+      enabled: false

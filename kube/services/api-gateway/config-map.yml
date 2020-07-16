@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-gateway-config
+  labels:
+    app: api-gateway-service
+data:
+  appsettings.json: |-
+    {
+      "app": {
+        "name": "Pacco API Gateway",
+        "service": "api-gateway",
+        "version": "1"
+      },
+      "logger": {
+        "level": "information",
+        "excludePaths": [ "/ping", "/metrics" ],
+        "console": {
+          "enabled": true
+        },
+        "file": {
+          "enabled": false,
+          "path": "logs/logs.txt",
+          "interval": "day"
+        },
+        "seq": {
+          "enabled": false,
+          "url": "seq.default.svc.cluster.local:5341",
+          "apiKey": "secret"
+        }
+      },
+      "metrics": {
+        "enabled": true,
+        "influxEnabled": false,
+        "prometheusEnabled": true,
+        "influxUrl": "http://localhost:8086",
+        "database": "pacco",
+        "env": "local",
+        "interval": 5
+      }
+    }

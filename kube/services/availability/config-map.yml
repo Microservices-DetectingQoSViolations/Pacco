@@ -1,0 +1,183 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: availability-config
+  labels:
+    app: availability-service
+data:
+  appsettings.json: |-
+    {
+      "app": {
+        "name": "Pacco Availability Service",
+        "service": "availability-service",
+        "version": "1"
+      },
+      "consul": {
+        "enabled": false,
+        "url": "http://localhost:8500",
+        "service": "availability-service",
+        "address": "docker.for.win.localhost",
+        "port": "5001",
+        "pingEnabled": true,
+        "pingEndpoint": "ping",
+        "pingInterval": 3,
+        "removeAfterInterval": 3
+      },
+      "fabio": {
+        "enabled": false,
+        "url": "http://localhost:9999",
+        "service": "availability-service"
+      },
+      "httpClient": {
+        "type": "k8s",
+        "retries": 3,
+        "services": {
+          "customers": "customers-service"
+        },
+        "requestMasking": {
+          "enabled": true,
+          "maskTemplate": "*****"
+        }
+      },
+      "logger": {
+        "level": "information",
+        "excludePaths": [ "/ping", "/metrics" ],
+        "excludeProperties": [
+          "api_key",
+          "access_key",
+          "ApiKey",
+          "ApiSecret",
+          "ClientId",
+          "ClientSecret",
+          "ConnectionString",
+          "Password",
+          "Email",
+          "Login",
+          "Secret",
+          "Token"
+        ],
+        "console": {
+          "enabled": true
+        },
+        "file": {
+          "enabled": false,
+          "path": "logs/logs.txt",
+          "interval": "day"
+        },
+        "seq": {
+          "enabled": false,
+          "url": "seq.default.svc.cluster.local:5341",
+          "apiKey": "secret"
+        }
+      },
+      "jaeger": {
+        "enabled": true,
+        "serviceName": "availability",
+        "udpHost": "jaeger-tracing-agent.default.svc.cluster.local",
+        "udpPort": 6831,
+        "maxPacketSize": 0,
+        "sampler": "const",
+        "excludePaths": [ "/ping", "/metrics" ]
+      },
+      "qoSTracking": {
+        "enabled": true,
+        "enabledTracing": true,
+        "samplingRate": 1.0,
+        "windowComparerSize": 2,
+        "qoSTimeViolationOptions": {
+          "commandExceedingCoefficient": 0.3,
+          "queryExceedingCoefficient": 0.1,
+          "eventExceedingCoefficient": 0.1
+        }
+      },
+      "metrics": {
+        "enabled": true,
+        "influxEnabled": false,
+        "prometheusEnabled": true,
+        "influxUrl": "http://localhost:8086",
+        "database": "pacco",
+        "env": "local",
+        "interval": 5
+      },
+      "mongo": {
+        "connectionString": "mongodb://mongo-mongodb-replicaset-0.mongo-mongodb-replicaset.default.svc.cluster.local,mongo-mongodb-replicaset-1.mongo-mongodb-replicaset.default.svc.cluster.local,mongo-mongodb-replicaset-2.mongo-mongodb-replicaset.default.svc.cluster.local:27017/?replicaSet=rs0",
+        "database": "availability-service",
+        "seed": false
+      },
+      "outbox": {
+        "enabled": false,
+        "type": "sequential",
+        "expiry": 3600,
+        "intervalMilliseconds": 2000,
+        "inboxCollection": "inbox",
+        "outboxCollection": "outbox"
+      },
+      "rabbitMq": {
+        "connectionName": "availability-service",
+        "retries": 3,
+        "retryInterval": 2,
+        "conventionsCasing": "snakeCase",
+        "logger": {
+          "enabled": true
+        },
+        "username": "guest",
+        "password": "guest",
+        "virtualHost": "/",
+        "port": 5672,
+        "hostnames": [
+          "rabbitmq-rabbitmq-ha.default.svc.cluster.local"
+        ],
+        "requestTimeout": "00:00:10",
+        "publishConfirmTimeout": "00:00:01",
+        "recoveryInterval": "00:00:10",
+        "persistentDeliveryMode": true,
+        "autoCloseConnection": true,
+        "automaticRecovery": true,
+        "topologyRecovery": true,
+        "exchange": {
+          "declare": true,
+          "durable": true,
+          "autoDelete": false,
+          "type": "topic",
+          "name": "availability"
+        },
+        "queue": {
+          "declare": true,
+          "durable": true,
+          "exclusive": false,
+          "autoDelete": false
+        },
+        "context": {
+          "enabled": true,
+          "header": "message_context"
+        },
+        "spanContextHeader": "span_context"
+      },
+      "redis": {
+        "connectionString": "redis-master.default.svc.cluster.local",
+        "instance": "availability:"
+      },
+      "swagger": {
+        "enabled": true,
+        "reDocEnabled": false,
+        "name": "v1",
+        "title": "API",
+        "version": "v1",
+        "routePrefix": "docs",
+        "includeSecurity": false
+      },
+      "security": {
+        "certificate": {
+          "header": "Certificate"
+        }
+      },
+      "vault": {
+        "enabled": false,
+        "url": "http://vault:8200",
+        "key": "availability-service/settings",
+        "authType": "token",
+        "token": "secret",
+        "username": "user",
+        "password": "secret"
+      }
+    }

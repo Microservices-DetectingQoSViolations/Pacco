@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders-service
+  labels:
+    app: orders-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orders-service
+  template:
+    metadata:
+      labels:
+        app: orders-service
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /metrics
+        prometheus.io/runtimepath: /runtime_metrics
+        prometheus.io/port: "80"
+    spec:
+      containers:
+        - name: orders-service
+          image: meho27/pacco.services.orders:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - name: orders-config
+              mountPath: /app/appsettings.json
+              subPath: appsettings.json
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: kube
+      volumes:
+        - name: orders-config
+          configMap:
+            name: orders-config

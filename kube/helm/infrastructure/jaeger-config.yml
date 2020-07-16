@@ -1,0 +1,13 @@
+cassandra:
+  config:
+    seed_size: 1
+    cluster_size: 1
+    max_heap_size: 256M
+    heap_new_size: 64M
+  resources:
+    requests:
+      memory: 1024Mi
+      cpu: 0.2
+    limits:
+      memory: 1024Mi
+      cpu: 0.2
