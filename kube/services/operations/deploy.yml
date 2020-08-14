@@ -22,7 +22,7 @@ spec:
       containers:
         - name: operations-service
           image: meho27/pacco.services.operations:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 80

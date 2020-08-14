@@ -14,7 +14,7 @@ data:
       },
       "logger": {
         "level": "information",
-        "excludePaths": [ "/ping", "/metrics" ],
+        "excludePaths": [ "/ping", "/metrics", "runtime_metrics" ],
         "console": {
           "enabled": true
         },
@@ -36,6 +36,6 @@ data:
         "influxUrl": "http://localhost:8086",
         "database": "pacco",
         "env": "local",
-        "interval": 5
+        "interval": 2
       }
     }

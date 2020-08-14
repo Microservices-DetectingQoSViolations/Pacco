@@ -1,2 +1,13 @@
-usePassword:
-  false
+master:
+  persistence:
+    enabled: false
+
+slave:
+  persistence:
+    enabled: false
+
+cluster:
+  enabled: false
+  slaveCount: 0
+
+usePassword: false

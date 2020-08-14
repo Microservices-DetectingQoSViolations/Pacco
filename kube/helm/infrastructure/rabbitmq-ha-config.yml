@@ -33,6 +33,8 @@ extraConfig: |
 rabbitmqPrometheusPlugin:
   enabled: true
 
+# replicaCount: 3
+
 prometheus:
   enabled: false
   exporter:
