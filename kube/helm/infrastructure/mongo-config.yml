@@ -2,3 +2,6 @@ auth:
   enabled: false
   existingKeySecret: keyfilesecret
   existingAdminSecret: mongo-secret
+
+persistentVolume:
+  enabled: false

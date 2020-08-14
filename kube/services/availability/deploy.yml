@@ -22,7 +22,7 @@ spec:
       containers:
         - name: availability-service
           image: meho27/pacco.services.availability:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 80

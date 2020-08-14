@@ -22,7 +22,7 @@ spec:
       containers:
         - name: order-maker-service
           image: meho27/pacco.services.order-maker:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 80

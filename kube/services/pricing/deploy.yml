@@ -22,7 +22,7 @@ spec:
       containers:
         - name: pricing-service
           image: meho27/pacco.services.pricing:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 80
