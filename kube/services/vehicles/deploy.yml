@@ -5,7 +5,7 @@ metadata:
   labels:
     app: vehicles-service
 spec:
-  replicas: 1
+  replicas: 10
   selector:
     matchLabels:
       app: vehicles-service

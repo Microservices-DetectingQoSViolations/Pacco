@@ -1,0 +1,7 @@
+auth:
+  enabled: false
+  existingKeySecret: keyfilesecret
+  existingAdminSecret: mongo-secret
+
+persistence:
+  enabled: false

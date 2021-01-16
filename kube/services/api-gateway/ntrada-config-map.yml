@@ -66,14 +66,14 @@ data:
         enabled: true
         connectionName: api-gateway
         hostnames:
-          - rabbitmq-rabbitmq-ha.default.svc.cluster.local
+          - rabbitmq-rabbitmq-ha
         port: 5672
         virtualHost: /
         username: guest
         password: guest
-        requestedConnectionTimeout: 3000
-        socketReadTimeout: 3000
-        socketWriteTimeout: 3000
+        requestedConnectionTimeout: 10000
+        socketReadTimeout: 10000
+        socketWriteTimeout: 10000
         requestedHeartbeat: 60
         exchange:
           declareExchange: true
@@ -89,7 +89,7 @@ data:
         
       tracing:
         serviceName: api-gateway
-        udpHost: jaeger-tracing-agent.default.svc.cluster.local
+        udpHost: jaeger-tracing-agent
         udpPort: 6831
         maxPacketSize: 0
         sampler: const

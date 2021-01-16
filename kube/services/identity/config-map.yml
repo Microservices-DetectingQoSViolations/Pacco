@@ -78,14 +78,14 @@ data:
         },
         "seq": {
           "enabled": false,
-          "url": "seq.default.svc.cluster.local:5341",
+          "url": "seq:5341",
           "apiKey": "secret"
         }
       },
       "jaeger": {
         "enabled": true,
         "serviceName": "identity",
-        "udpHost": "jaeger-tracing-agent.default.svc.cluster.local",
+        "udpHost": "jaeger-tracing-agent",
         "udpPort": 6831,
         "maxPacketSize": 0,
         "sampler": "const",
@@ -94,12 +94,12 @@ data:
       "qoSTracking": {
         "enabled": true,
         "enabledTracing": true,
-        "samplingRate": 1.0,
+        "samplingRate": 0.5,
         "windowComparerSize": 50,
         "qoSTimeViolationOptions": {
-          "commandExceedingCoefficient": 0.1,
-          "queryExceedingCoefficient": 0.1,
-          "eventExceedingCoefficient": 0.1
+          "commandExceedingCoefficient": 0.05,
+          "queryExceedingCoefficient": 0.05,
+          "eventExceedingCoefficient": 0.05
         }
       },
       "metrics": {
@@ -112,7 +112,7 @@ data:
         "interval": 2
       },
       "mongo": {
-        "connectionString": "mongodb://mongo-mongodb-replicaset-0.mongo-mongodb-replicaset.default.svc.cluster.local,mongo-mongodb-replicaset-1.mongo-mongodb-replicaset.default.svc.cluster.local,mongo-mongodb-replicaset-2.mongo-mongodb-replicaset.default.svc.cluster.local:27017/?replicaSet=rs0",
+        "connectionString": "mongodb://mongo-mongodb:27017",
         "database": "identity-service",
         "seed": false
       },
@@ -137,7 +137,7 @@ data:
         "virtualHost": "/",
         "port": 5672,
         "hostnames": [
-          "rabbitmq-rabbitmq-ha.default.svc.cluster.local"
+          "rabbitmq-rabbitmq-ha"
         ],
         "requestTimeout": "00:00:10",
         "publishConfirmTimeout": "00:00:01",
@@ -166,7 +166,7 @@ data:
         "spanContextHeader": "span_context"
       },
       "redis": {
-        "connectionString": "redis-master.default.svc.cluster.local",
+        "connectionString": "redis-master",
         "instance": "identity:"
       },
       "swagger": {
